@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>controller6610-transportcim-normalization-plugin</artifactId>
+    <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+    <version>1.1.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>ERICcontroller6610tcimnormplugin_CXP9042188</artifactId>
+  <name>[${project.parent.artifactId}] RPM module</name>
+  <packaging>${rpm.packaging}</packaging>
+
+  <properties>
+    <publish_artifact>true</publish_artifact>
+    <media.category>service</media.category>
+    <com.ericsson.oss.rpm.architecture>noarch</com.ericsson.oss.rpm.architecture>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.parent.artifactId}-module</artifactId>
+      <version>${project.version}</version>
+      <classifier>package</classifier>
+      <type>zip</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/controller6610-transportcim-normalization-plugin-module</outputDirectory>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+                  <artifactId>controller6610-transportcim-normalization-plugin-module</artifactId>
+                  <classifier>package</classifier>
+                  <type>zip</type>
+                  <includes>**/*</includes>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <configuration>
+          <mappings>
+            <mapping>
+              <directory>${eap.ext.modules.dir}</directory>
+              <filemode>775</filemode>
+              <username>jboss_user</username>
+              <groupname>jboss</groupname>
+              <directoryIncluded>false</directoryIncluded>
+              <recurseDirectories>false</recurseDirectories>
+              <sources>
+                <source>
+                  <location>${project.build.directory}/controller6610-transportcim-normalization-plugin-module</location>
+                </source>
+              </sources>
+            </mapping>
+          </mappings>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ericsson.nms</groupId>
+        <artifactId>integration</artifactId>
+        <version>15.2.0.40</version>
+    </parent>
+    <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+    <artifactId>controller6610-transportcim-normalization-plugin</artifactId>
+    <version>1.1.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <url>http://www.ericsson.com</url>
+    <organization>
+        <name>Ericsson</name>
+    </organization>
+
+    <prerequisites>
+        <maven>3.0.3</maven>
+    </prerequisites>
+
+    <name>[${project.artifactId}] JEE8 Project</name>
+    
+    <properties>
+        <version.jboss-javaee-8.0>1.0.4.Final</version.jboss-javaee-8.0>
+        <version.maven-checkstyle-plugin>2.17</version.maven-checkstyle-plugin>
+        <version.commons-io>2.4</version.commons-io>
+        <version.model-service-api-jar>10.4.4</version.model-service-api-jar>
+        <version.maven-ejb-plugin>3.0.1</version.maven-ejb-plugin>
+        <version.ejb>3.1</version.ejb>
+        <project.ear.defaultLibBundleDir>lib</project.ear.defaultLibBundleDir>
+        <version.commons-lang>2.6</version.commons-lang>
+        <version.commons-collections>3.2.1</version.commons-collections>
+        <version.guava>14.0.1</version.guava>
+        <version.modeling-common-jar>9.4.2</version.modeling-common-jar>
+        <version.dps-api>1.43.2</version.dps-api>
+        <version.dps-dto>1.43.2</version.dps-dto>
+        <!-- JBoss Modules your service will automatically add to classpath -->
+        <project.ear.Dependencies>com.ericsson.oss.itpf.sdk.service-framework:3.x services export meta-inf optional, com.ericsson.oss.itpf.datalayer.dps.api export, org.slf4j export</project.ear.Dependencies>
+        <version.service.framework>4.22.1</version.service.framework>
+
+        <!-- Transport CIM Dependencies -->
+        <version.transportcim-normalization-spi>1.9.7</version.transportcim-normalization-spi>
+        <!-- SPOCK/GROOVY PLUGIN -->
+        <version.groovy>2.4.8</version.groovy>
+        <version.cglib-nodep>3.1</version.cglib-nodep>
+        <version.spock>1.0-groovy-2.4</version.spock>
+        <version.cdi-test-support>1.1.80</version.cdi-test-support>
+        <version.commons-lang>2.6</version.commons-lang>
+        <version.maven.surefire>2.19.1</version.maven.surefire>
+        <version.modeling.bom>RELEASE</version.modeling.bom>
+        <version.dps.bom>2.20.14</version.dps.bom>
+
+        <ericsson.scm.url>scm:git:[fetch=]ssh://gerritmirror-ha.lmera.ericsson.se:29418/OSS/ENM-Parent/SQ-Gate/com.ericsson.oss.mediation.tcim.normalization/controller6610-transportcim-normalization-plugin[push=]ssh://gerrit.ericsson.se:29418/OSS/ENM-Parent/SQ-Gate/com.ericsson.oss.mediation.tcim.normalization/controller6610-transportcim-normalization-plugin</ericsson.scm.url>
+
+    </properties>
+
+   <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ericsson.oss.itpf.datalayer.dps</groupId>
+                <artifactId>dps-api</artifactId>
+                <version>${version.dps-api}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.spec.javax.ejb</groupId>
+                <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+                <version>1.0.2.Final</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.spec.javax.resource</groupId>
+                <artifactId>jboss-connector-api_1.6_spec</artifactId>
+                <version>1.0.1.Final</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ericsson.oss.itpf.modeling</groupId>
+                <artifactId>model-service-api-jar</artifactId>
+                <version>${version.model-service-api-jar}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+                <artifactId>transportcim-normalization-api-jar</artifactId>
+                <version>${version.transportcim-normalization-spi}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+                <artifactId>transportcim-normalization-plugin-api-jar</artifactId>
+                <version>${version.transportcim-normalization-spi}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+                <artifactId>transportcim-normalization-jar</artifactId>
+                <version>${project.version}</version>
+                <type>ejb</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+                <artifactId>transportcim-normalization-module</artifactId>
+                <version>${project.version}</version>
+                <classifier>package</classifier>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ericsson.oss.itpf.sdk</groupId>
+                <artifactId>ServiceFrameworkJBossBOM</artifactId>
+                <version>${version.service.framework}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Spock test -->
+            <dependency>
+                <groupId>com.ericsson.cds</groupId>
+                <artifactId>cdi-test-support</artifactId>
+                <version>${version.cdi-test-support}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>${version.spock}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>${version.cglib-nodep}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${version.groovy}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${version.commons-lang}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${version.commons-collections}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${version.commons-io}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${version.guava}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+          <groupId>org.jboss.spec</groupId>
+          <artifactId>jboss-javaee-8.0</artifactId>
+          <version>${version.jboss-javaee-8.0}</version>
+          <type>pom</type>
+          <scope>provided</scope>
+        </dependency>
+
+        <!-- TransportCim Normalization APIs -->
+        <dependency>
+            <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+            <artifactId>transportcim-normalization-api-jar</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+            <artifactId>transportcim-normalization-plugin-api-jar</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- ENM Checkstyle Rules -->
+                <!-- http://confluence-nam.lmera.ericsson.se/display/CDO/Checkstyle -->
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${version.maven-checkstyle-plugin}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>6.18</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.ericsson.cds</groupId>
+                            <artifactId>checkstyle-module</artifactId>
+                            <version>1.1.46</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <linkXRef>false</linkXRef>
+                        <configLocation>/enm/checkstyle/checkstyle.xml</configLocation>
+                        <suppressionsLocation>/enm/checkstyle-suppressions.xml</suppressionsLocation>
+                        <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                        <violationSeverity>warning</violationSeverity>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <includeTestResources>false</includeTestResources>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <!-- Run Checkstyle check -->
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--Profiles for site documentation-->
+
+    <profiles>
+        <profile>
+            <id>site_review</id>
+            <distributionManagement>
+                <site>
+                    <id>site</id>
+                    <name>Site</name>
+                    <url>${site.url}</url>
+                </site>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
+    <scm>
+        <developerConnection>${ericsson.scm.url}</developerConnection>
+        <connection>${ericsson.scm.url}</connection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <!--Profile to deploy latest site-->
+    <modules>
+        <module>ERICcontroller6610tcimnormplugin_CXP9042188</module>
+        <module>controller6610-transportcim-normalization-plugin-jar</module>
+        <module>controller6610-transportcim-normalization-plugin-module</module>
+    </modules>
+    
+</project>

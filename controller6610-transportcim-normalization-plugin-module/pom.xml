@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>controller6610-transportcim-normalization-plugin</artifactId>
+		<groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+		<version>1.1.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>controller6610-transportcim-normalization-plugin-module</artifactId>
+	<name>[${project.parent.artifactId}] Controller6610 Normalization Plugin Jboss Module</name>
+	<packaging>ear</packaging>
+
+	<dependencies>
+		<!-- Complex Plugin Normalization -->
+		<dependency>
+			<groupId>com.ericsson.oss.mediation.tcim.normalization</groupId>
+			<artifactId>controller6610-transportcim-normalization-plugin-jar</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <targetPath>${project.build.directory}/resources</targetPath>
+                                    <filtering>true</filtering>
+                                    <directory>${basedir}/src/main/resources</directory>
+                                    <includes>
+                                        <include>module.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>
+                            ${project.basedir}${file.separator}src${file.separator}main${file.separator}assembly${file.separator}assembly.xml
+                        </descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-transport-mediation-module</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
